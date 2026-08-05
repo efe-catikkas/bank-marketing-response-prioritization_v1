@@ -1,0 +1,4 @@
+split,period_start,period_end,record_count,positive_count,positive_rate
+Training,1,8,27964,1465,0.05238878558146188
+Validation,9,10,8250,966,0.11709090909090909
+Test,11,26,4962,2208,0.4449818621523579

@@ -1,0 +1,5 @@
+actual_class,predicted_class,record_count
+Olumsuz,Olumsuz,1111
+Olumsuz,Olumlu,1643
+Olumlu,Olumsuz,473
+Olumlu,Olumlu,1735

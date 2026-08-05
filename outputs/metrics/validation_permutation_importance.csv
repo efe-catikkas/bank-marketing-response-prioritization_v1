@@ -1,0 +1,15 @@
+feature,importance_mean,importance_std,scoring,evaluation_set
+month,0.04895170654734719,0.0037349274249031937,average_precision,Validation
+age,0.017479202989059327,0.002573744619151252,average_precision,Validation
+poutcome,0.01428736355791474,0.004017322070261313,average_precision,Validation
+default,0.00748421673195247,0.0021053318954801074,average_precision,Validation
+job,0.006427102904814802,0.0019652359788573026,average_precision,Validation
+education,0.005572528785350861,0.00364857428496738,average_precision,Validation
+previously_contacted,0.004806852594934541,0.0006833676414379385,average_precision,Validation
+contact,0.0030279414249182015,0.0032425794622185714,average_precision,Validation
+previous,0.0015921410344493625,0.0027057635688612493,average_precision,Validation
+marital,0.0011088238262263739,0.0022062195627967776,average_precision,Validation
+housing,0.000551500465792748,0.0016495434330900552,average_precision,Validation
+campaign,-5.630957786272317e-05,0.0007205291314523561,average_precision,Validation
+day_of_week,-8.59542439543004e-05,0.0019325235548309566,average_precision,Validation
+loan,-0.001506746744090215,0.001118136451550823,average_precision,Validation

@@ -1,0 +1,2 @@
+selected_model,evaluation_set,test_record_count,test_positive_rate,accuracy,majority_baseline_accuracy,precision,recall,f1,roc_auc,pr_auc,selected_count_at_20,response_rate_at_20,capture_at_20,lift_at_20,expected_extra_positive_at_20
+Random Forest,Untouched chronological test,4962,0.4449818621523579,0.573559048770657,0.5550181378476421,0.5136175251628182,0.7857789855072463,0.6211958467597566,0.660100295485881,0.6091540975640302,999,0.6786786786786787,0.3070652173913043,1.5251827914871394,233.23620773697098

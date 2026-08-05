@@ -1,0 +1,8 @@
+feature,reason
+duration,Görüşme sonrasında oluşur; tahmin anında bilinmez.
+pdays,999 sentinel değeri ve tam zaman bilgisinin belirsizliği.
+emp.var.rate,Makroekonomik dönem vekili ve taşınabilirlik riski.
+cons.price.idx,Makroekonomik dönem vekili ve taşınabilirlik riski.
+cons.conf.idx,Makroekonomik dönem vekili ve taşınabilirlik riski.
+euribor3m,Makroekonomik dönem vekili ve taşınabilirlik riski.
+nr.employed,Makroekonomik dönem vekili ve taşınabilirlik riski.

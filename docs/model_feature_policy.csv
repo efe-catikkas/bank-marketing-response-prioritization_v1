@@ -1,0 +1,23 @@
+feature,status,reason
+age,use,Müşteri profili
+campaign,conditional_use,Planlanan temas anında bilindiği varsayılır
+previous,use,Geçmiş kampanya temas sayısı
+job,use,Müşteri profili
+marital,use,Müşteri profili
+education,use,Müşteri profili
+default,use,Kredi/temerrüt profili
+housing,use,Konut kredisi bilgisi
+loan,use,Bireysel kredi bilgisi
+contact,conditional_use,Planlanan temas kanalı olduğu varsayılır
+month,conditional_use,Planlanan temas ayı olduğu varsayılır
+day_of_week,conditional_use,Planlanan temas günü olduğu varsayılır
+poutcome,use,Önceki kampanya sonucu
+previously_contacted,derived_use,pdays alanından daha önce temas edilme bilgisi
+duration,exclude,Görüşme sonrasında oluşur; leakage
+pdays,exclude,999 sentinel ve tam zaman bağlamı belirsiz
+emp.var.rate,exclude,Makroekonomik dönem vekili ve taşınabilirlik riski
+cons.price.idx,exclude,Makroekonomik dönem vekili ve taşınabilirlik riski
+cons.conf.idx,exclude,Makroekonomik dönem vekili ve taşınabilirlik riski
+euribor3m,exclude,Makroekonomik dönem vekili ve taşınabilirlik riski
+nr.employed,exclude,Makroekonomik dönem vekili ve taşınabilirlik riski
+campaign_period_id,split_only,Yalnızca kronolojik ayrım ve dönem içi kapasite
