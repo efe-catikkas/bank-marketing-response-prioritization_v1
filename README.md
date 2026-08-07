@@ -66,6 +66,30 @@ Birincil seçim ölçütü Lift@20 olduğu için Random Forest seçildi. İki mo
 
 ![Test kapasite senaryoları](outputs/figures/03_capacity_scenarios.png)
 
+## Power BI dashboard
+
+Model çıktıları, kampanya kapasitesi ve öncelikli kayıtların profilini iş kullanıcılarının daha kolay yorumlayabilmesi için üç sayfalık bir Power BI dashboard hazırlanmıştır.
+
+### 1. Kampanya Kararı ve Arama Önceliği
+
+İlk sayfa, farklı temas kapasitesi senaryolarında önceliklendirilen kayıt sayısını, yanıt oranını, Capture ve Lift sonuçlarını karşılaştırır.
+
+![Kampanya Kararı ve Arama Önceliği](images/dashboard_01_campaign_decision.png)
+
+### 2. Önceliklendirilen Kayıtların Profili
+
+İkinci sayfa, Top %20 öncelikli grubun yaş, meslek, eğitim, temas kanalı ve geçmiş kampanya özelliklerini özetler.
+
+![Önceliklendirilen Kayıtların Profili](images/dashboard_02_target_profile.png)
+
+### 3. Model ve Sınırlılıklar
+
+Üçüncü sayfa, seçilen modelin temel performans göstergelerini ve sonuçların yorumlanmasında dikkate alınması gereken metodolojik sınırları gösterir.
+
+![Model ve Sınırlılıklar](images/dashboard_03_model_limitations.png)
+
+> Dashboard sonuçları retrospektif test verisine dayanmaktadır. Görseller gerçek kampanya uplift'i, finansal ROI veya canlı karar motoru performansı olarak yorumlanmamalıdır.
+
 ## Segment profili
 
 V4 sürümünde untouched test kayıtları aşağıdaki boyutlarda ayrıca incelenir:
