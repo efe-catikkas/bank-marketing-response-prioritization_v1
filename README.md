@@ -36,7 +36,7 @@ The model's `response_score` output is not an exact purchase probability. It is 
 
 The baseline response rate changes substantially across periods. Therefore, the results should not be interpreted as a guarantee of performance for future campaigns.
 
-![Response rate by campaign period](outputs/figures/01_period_response_profile.png)
+![Response rate by campaign period](outputs/figures/01_period_response_profile.png?v=20261004-en)
 
 ## Validation model comparison
 
@@ -64,7 +64,7 @@ Random Forest was selected because Lift@20 was the primary model-selection metri
 
 The “expected difference” is not the result of a controlled experiment, real campaign uplift, or an uplift model. It is a retrospective comparison against the expected outcome of random selection at the same capacity level within each test period.
 
-![Test capacity scenarios](outputs/figures/03_capacity_scenarios.png)
+![Test capacity scenarios](outputs/figures/03_capacity_scenarios.png?v=20261004-en)
 
 ## Power BI dashboard
 
@@ -74,19 +74,19 @@ A three-page Power BI dashboard was prepared so that business users can interpre
 
 The first page compares the number of prioritized records, response rate, Capture, and Lift across different contact-capacity scenarios.
 
-![Campaign Decision and Contact Prioritization](images/dashboard_01_campaign_decision.png)
+![Campaign Decision and Contact Prioritization](images/dashboard_01_campaign_decision.png?v=20261004-en)
 
 ### 2. Profile of Prioritized Records
 
 The second page summarizes the age, job, education, contact channel, and previous-campaign characteristics of the Top 20% prioritized group.
 
-![Profile of Prioritized Records](images/dashboard_02_target_profile.png)
+![Profile of Prioritized Records](images/dashboard_02_target_profile.png?v=20261004-en)
 
 ### 3. Model and Limitations
 
 The third page presents the selected model's key performance indicators and the methodological limitations that should be considered when interpreting the results.
 
-![Model and Limitations](images/dashboard_03_model_limitations.png)
+![Model and Limitations](images/dashboard_03_model_limitations.png?v=20261004-en)
 
 > Dashboard results are based on retrospective test data. The visuals should not be interpreted as real campaign uplift, financial ROI, or live decision-engine performance.
 
@@ -103,7 +103,7 @@ In version V4, untouched test records are additionally analyzed across the follo
 
 For each segment, record volume, number of positive records, response rate, lift versus the overall average, and a low-sample-size warning are generated. The findings are observational and should not be interpreted as causal relationships or as automatic targeting/exclusion policies.
 
-![Test response profile by previous campaign outcome](outputs/figures/04_poutcome_response_profile.png)
+![Test response profile by previous campaign outcome](outputs/figures/04_poutcome_response_profile.png?v=20261004-en)
 
 ## Features used
 
