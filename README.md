@@ -1,141 +1,141 @@
-# Bank Marketing: Kronolojik Yanıt Tahmini, Temas Önceliklendirmesi ve Segment Profili
+# Bank Marketing: Chronological Response Prediction, Contact Prioritization, and Segment Profiling
 
-Bu proje, UCI Bank Marketing veri setindeki kampanya temas kayıtlarını olumlu yanıt eğilimine göre **dönem içinde sıralamak**, sınırlı temas kapasitesini değerlendirmek ve önceliklendirilen kayıtların profilini Power BI kullanımına uygun tablolarla açıklamak amacıyla hazırlanmış bir eğitim ve portföy çalışmasıdır.
+This project is an educational and portfolio study designed to **rank campaign contact records within each period** according to their positive response propensity, evaluate limited contact capacity, and explain the profile of prioritized records through tables suitable for Power BI.
 
-> **Güncel sürüm:** v4  
-> **Ana analiz:** `notebooks/bank_marketing_chronological_analysis_v4.ipynb`  
-> **Çalıştırılabilir Python dosyası:** `src/bank_marketing_chronological_analysis_v4.py`
+> **Current version:** v4  
+> **Main analysis:** `notebooks/bank_marketing_chronological_analysis_v4.ipynb`  
+> **Executable Python file:** `src/bank_marketing_chronological_analysis_v4.py`
 
-## İş sorusu
+## Business question
 
-Her kampanya döneminde yalnızca belirli sayıda temas kaydı işleme alınabilecekse, hangi kayıtlar önce değerlendirilmelidir ve önceliklendirilen kayıtların profili nasıldır?
+If only a limited number of contact records can be processed in each campaign period, which records should be evaluated first, and what is the profile of the prioritized records?
 
-Modelin `response_score` çıktısı kesin satın alma olasılığı değildir. Kayıtları aynı kampanya dönemi içinde sıralamak için kullanılan göreli bir **yanıt eğilimi / öncelik skorudur**.
+The model's `response_score` output is not an exact purchase probability. It is a relative **response propensity / prioritization score** used to rank records within the same campaign period.
 
-## Projenin kapsamı
+## Project scope
 
-1. Veri kalitesi, `unknown` değerleri ve tam duplicate satırlar kontrol edildi.
-2. Dosyanın kronolojik sırası korunarak tam kampanya dönem blokları oluşturuldu.
-3. Dönemler training, validation ve untouched test olarak ayrıldı.
-4. `duration` veri sızıntısı nedeniyle modelden çıkarıldı.
-5. Makroekonomik alanlar dönem vekili olma ve taşınabilirlik riski nedeniyle ana modelden çıkarıldı.
-6. Logistic Regression ve Random Forest karşılaştırıldı.
-7. Model seçimi validation bölümündeki **Lift@20** sonucuna göre yapıldı; PR-AUC destek metriği olarak kullanıldı.
-8. Seçilen model training ve validation birleştirilerek yeniden eğitildi ve en güncel test bölümünde yalnızca bir kez değerlendirildi.
-9. Test kayıtları her kampanya döneminde ayrı sıralanarak %5–%50 kapasite senaryoları üretildi.
-10. Untouched test bölümünde meslek, kanal, önceki kampanya, temas sayısı, yaş ve eğitim profilleri raporlandı.
-11. Power BI için kayıt düzeyi, model, kapasite, dönem ve segment tabloları oluşturuldu.
+1. Data quality, `unknown` values, and exact duplicate rows were checked.
+2. Full campaign-period blocks were created while preserving the chronological order of the file.
+3. Periods were split into training, validation, and untouched test sets.
+4. `duration` was excluded from the model because of data leakage.
+5. Macroeconomic fields were excluded from the main model because they may act as period proxies and create portability risk.
+6. Logistic Regression and Random Forest were compared.
+7. Model selection was based on **Lift@20** in the validation set; PR-AUC was used as a supporting metric.
+8. The selected model was retrained on the combined training and validation data and evaluated only once on the most recent test section.
+9. Test records were ranked separately within each campaign period, and 5%–50% capacity scenarios were generated.
+10. Job, channel, previous campaign, number of contacts, age, and education profiles were reported on the untouched test set.
+11. Record-level, model, capacity, period, and segment tables were created for Power BI.
 
-## Kronolojik ayrım
+## Chronological split
 
-| Bölüm | Dönem blokları | Kayıt | Olumlu yanıt oranı |
+| Split | Period blocks | Records | Positive response rate |
 |---|---:|---:|---:|
-| Training | 1–8 | 27.964 | %5,24 |
-| Validation | 9–10 | 8.250 | %11,71 |
-| Test | 11–26 | 4.962 | %44,50 |
+| Training | 1–8 | 27,964 | 5.24% |
+| Validation | 9–10 | 8,250 | 11.71% |
+| Test | 11–26 | 4,962 | 44.50% |
 
-Dönemler arasındaki baz oran değişimi belirgindir. Bu nedenle sonuçlar gelecekteki kampanyalar için performans garantisi olarak yorumlanmaz.
+The baseline response rate changes substantially across periods. Therefore, the results should not be interpreted as a guarantee of performance for future campaigns.
 
-![Kampanya dönemlerine göre yanıt oranı](outputs/figures/01_period_response_profile.png)
+![Response rate by campaign period](outputs/figures/01_period_response_profile.png)
 
-## Validation model karşılaştırması
+## Validation model comparison
 
 | Model | ROC-AUC | PR-AUC | Lift@20 | Capture@20 |
 |---|---:|---:|---:|---:|
-| Random Forest | 0,634 | **0,199** | **1,42** | **%28,36** |
-| Logistic Regression | **0,640** | 0,195 | 1,37 | %27,33 |
+| Random Forest | 0.634 | **0.199** | **1.42** | **28.36%** |
+| Logistic Regression | **0.640** | 0.195 | 1.37 | 27.33% |
 
-Birincil seçim ölçütü Lift@20 olduğu için Random Forest seçildi. İki model arasında kesin ve büyük bir üstünlük iddia edilmez.
+Random Forest was selected because Lift@20 was the primary model-selection metric. No claim is made that one model is decisively or substantially superior to the other.
 
-## Untouched test sonucu
+## Untouched test result
 
-| Metrik | Sonuç |
+| Metric | Result |
 |---|---:|
-| Seçilen model | Random Forest |
-| ROC-AUC | 0,660 |
-| PR-AUC | 0,609 |
-| F1 | 0,621 |
-| Test baz oranı | %44,50 |
-| Dönem içi Top %20 seçilen kayıt | 999 |
-| Top %20 yanıt oranı | %67,87 |
-| Capture@20 | %30,71 |
-| Lift@20 | 1,53 |
-| Dönem bazlı rastgele seçim beklentisine göre fark | yaklaşık +233 olumlu kayıt |
+| Selected model | Random Forest |
+| ROC-AUC | 0.660 |
+| PR-AUC | 0.609 |
+| F1 | 0.621 |
+| Test baseline response rate | 44.50% |
+| Records selected in the within-period Top 20% | 999 |
+| Top 20% response rate | 67.87% |
+| Capture@20 | 30.71% |
+| Lift@20 | 1.53 |
+| Difference vs. period-level random selection expectation | approximately +233 positive records |
 
-“Beklenen fark” kontrollü deney, gerçek kampanya artışı veya uplift sonucu değildir. Her test dönemi için aynı kapasitede rastgele seçim beklentisiyle yapılan retrospektif karşılaştırmadır.
+The “expected difference” is not the result of a controlled experiment, real campaign uplift, or an uplift model. It is a retrospective comparison against the expected outcome of random selection at the same capacity level within each test period.
 
-![Test kapasite senaryoları](outputs/figures/03_capacity_scenarios.png)
+![Test capacity scenarios](outputs/figures/03_capacity_scenarios.png)
 
 ## Power BI dashboard
 
-Model çıktıları, kampanya kapasitesi ve öncelikli kayıtların profilini iş kullanıcılarının daha kolay yorumlayabilmesi için üç sayfalık bir Power BI dashboard hazırlanmıştır.
+A three-page Power BI dashboard was prepared so that business users can interpret model outputs, campaign capacity, and the profile of prioritized records more easily.
 
-### 1. Kampanya Kararı ve Arama Önceliği
+### 1. Campaign Decision and Contact Prioritization
 
-İlk sayfa, farklı temas kapasitesi senaryolarında önceliklendirilen kayıt sayısını, yanıt oranını, Capture ve Lift sonuçlarını karşılaştırır.
+The first page compares the number of prioritized records, response rate, Capture, and Lift across different contact-capacity scenarios.
 
-![Kampanya Kararı ve Arama Önceliği](images/dashboard_01_campaign_decision.png)
+![Campaign Decision and Contact Prioritization](images/dashboard_01_campaign_decision.png)
 
-### 2. Önceliklendirilen Kayıtların Profili
+### 2. Profile of Prioritized Records
 
-İkinci sayfa, Top %20 öncelikli grubun yaş, meslek, eğitim, temas kanalı ve geçmiş kampanya özelliklerini özetler.
+The second page summarizes the age, job, education, contact channel, and previous-campaign characteristics of the Top 20% prioritized group.
 
-![Önceliklendirilen Kayıtların Profili](images/dashboard_02_target_profile.png)
+![Profile of Prioritized Records](images/dashboard_02_target_profile.png)
 
-### 3. Model ve Sınırlılıklar
+### 3. Model and Limitations
 
-Üçüncü sayfa, seçilen modelin temel performans göstergelerini ve sonuçların yorumlanmasında dikkate alınması gereken metodolojik sınırları gösterir.
+The third page presents the selected model's key performance indicators and the methodological limitations that should be considered when interpreting the results.
 
-![Model ve Sınırlılıklar](images/dashboard_03_model_limitations.png)
+![Model and Limitations](images/dashboard_03_model_limitations.png)
 
-> Dashboard sonuçları retrospektif test verisine dayanmaktadır. Görseller gerçek kampanya uplift'i, finansal ROI veya canlı karar motoru performansı olarak yorumlanmamalıdır.
+> Dashboard results are based on retrospective test data. The visuals should not be interpreted as real campaign uplift, financial ROI, or live decision-engine performance.
 
-## Segment profili
+## Segment profiling
 
-V4 sürümünde untouched test kayıtları aşağıdaki boyutlarda ayrıca incelenir:
+In version V4, untouched test records are additionally analyzed across the following dimensions:
 
-- Meslek
-- Temas kanalı
-- Önceki kampanya sonucu
-- Kampanya içindeki temas sayısı
-- Yaş bandı
-- Eğitim
+- Job
+- Contact channel
+- Previous campaign outcome
+- Number of contacts in the campaign
+- Age band
+- Education
 
-Her segment için kayıt hacmi, olumlu kayıt sayısı, yanıt oranı, genel ortalamaya göre lift ve düşük örneklem uyarısı üretilir. Bulgular gözlemseldir; neden–sonuç ilişkisi veya otomatik erişim/dışlama politikası olarak yorumlanmaz.
+For each segment, record volume, number of positive records, response rate, lift versus the overall average, and a low-sample-size warning are generated. The findings are observational and should not be interpreted as causal relationships or as automatic targeting/exclusion policies.
 
-![Önceki kampanya sonucuna göre test yanıt profili](outputs/figures/04_poutcome_response_profile.png)
+![Test response profile by previous campaign outcome](outputs/figures/04_poutcome_response_profile.png)
 
-## Kullanılan özellikler
+## Features used
 
-### Müşteri profili
+### Customer profile
 
 `age`, `job`, `marital`, `education`, `default`, `housing`, `loan`
 
-### Geçmiş kampanya bilgileri
+### Previous campaign information
 
 `previous`, `poutcome`, `previously_contacted`
 
-### Planlandığı varsayılan temas bağlamı
+### Assumed planned-contact context
 
 `campaign`, `contact`, `month`, `day_of_week`
 
-Ayrıntılı alan politikası: [`docs/model_feature_policy.csv`](docs/model_feature_policy.csv)
+Detailed feature policy: [`docs/model_feature_policy.csv`](docs/model_feature_policy.csv)
 
-## Power BI kullanımı
+## Power BI usage
 
-Ana dinamik tablo:
+Main dynamic table:
 
 ```text
 outputs/powerbi/powerbi_scored_test.csv
 ```
 
-Bu tablo kayıt düzeyinde skor, gerçek yanıt, dönem içi sıra, öncelik bandı ve Türkçeleştirilmiş profil alanlarını içerir. Diğer CSV dosyaları KPI, kapasite, model karşılaştırması, özellik önemi ve segment özetleri için yardımcı tablolardır.
+This table contains the record-level score, actual response, within-period rank, priority band, and translated profile fields. The other CSV files serve as supporting tables for KPIs, capacity scenarios, model comparison, feature importance, and segment summaries.
 
-- Tablo sözlüğü: [`docs/powerbi_tables.md`](docs/powerbi_tables.md)
-- Üç sayfalık dashboard rehberi: [`docs/powerbi_dashboard_guide.md`](docs/powerbi_dashboard_guide.md)
-- PBIX alanı ve kullanım notu: [`powerbi/README.md`](powerbi/README.md)
+- Table dictionary: [`docs/powerbi_tables.md`](docs/powerbi_tables.md)
+- Three-page dashboard guide: [`docs/powerbi_dashboard_guide.md`](docs/powerbi_dashboard_guide.md)
+- PBIX scope and usage notes: [`powerbi/README.md`](powerbi/README.md)
 
-## Proje yapısı
+## Project structure
 
 ```text
 bank-marketing-response-prioritization/
@@ -165,9 +165,9 @@ bank-marketing-response-prioritization/
         └── bank_marketing_chronological_analysis_v3.ipynb
 ```
 
-## Kurulum ve çalıştırma
+## Installation and execution
 
-Proje Python **3.13.5** ile test edilmiştir.
+The project was tested with Python **3.13.5**.
 
 ```bash
 python -m venv .venv
@@ -189,30 +189,30 @@ pip install -r requirements.txt
 jupyter notebook notebooks/bank_marketing_chronological_analysis_v4.ipynb
 ```
 
-Python dosyasını doğrudan çalıştırmak için proje kökünde:
+To run the Python file directly from the project root:
 
 ```bash
 python src/bank_marketing_chronological_analysis_v4.py
 ```
 
-Notebook veya Python dosyası baştan sona çalıştırıldığında `outputs/metrics/`, `outputs/powerbi/` ve `outputs/figures/` klasörleri yeniden üretilir.
+When the notebook or Python file is run from start to finish, the `outputs/metrics/`, `outputs/powerbi/`, and `outputs/figures/` folders are regenerated.
 
-## Başlıca sınırlılıklar
+## Main limitations
 
-- Benzersiz müşteri kimliği ve eksiksiz tarih/yıl bilgisi bulunmamaktadır.
-- Validation yalnızca iki tam kampanya dönem bloğu içerir.
-- Training, validation ve test baz oranları belirgin biçimde farklıdır.
-- `campaign`, `contact`, `month` ve `day_of_week` alanlarının skorlama anında bilindiği varsayılmıştır.
-- Model skoru kalibre edilmiş kesin satın alma olasılığı değildir.
-- Top %20 gerçek çağrı merkezi kapasitesi veya maliyet/getiri optimumu değildir.
-- Maliyet, ürün getirisi ve kontrol grubu olmadığı için ROI veya gerçek uplift hesaplanmamıştır.
-- Permutation importance ve segment farkları nedensellik göstermez.
-- Kayıt sayısı 30’un altında olan segmentler düşük örneklem olarak işaretlenmiştir.
-- Yaş ve benzeri profil alanları otomatik dışlama veya erişim kısıtlama kuralı olarak kullanılmamalıdır.
+- No unique customer identifier or complete date/year information is available.
+- Validation contains only two complete campaign-period blocks.
+- Training, validation, and test baseline response rates differ substantially.
+- The `campaign`, `contact`, `month`, and `day_of_week` fields are assumed to be known at scoring time.
+- The model score is not a calibrated exact purchase probability.
+- The Top 20% is not a real call-center capacity limit or a cost/return optimum.
+- ROI or true uplift was not calculated because cost, product return, and control-group data are not available.
+- Permutation importance and segment differences do not imply causality.
+- Segments with fewer than 30 records are flagged as low-sample-size segments.
+- Age and similar profile fields should not be used as automatic exclusion or access-restriction rules.
 
-## Veri kaynağı
+## Data source
 
 UCI Machine Learning Repository — **Bank Marketing**, Dataset ID 222  
 DOI: `10.24432/C5K306`
 
-Bu repo kamuya açık eğitim verisi üzerinde hazırlanmış retrospektif bir portföy analizidir. Kod lisansı bilinçli olarak eklenmemiştir; repository sahibi paylaşım koşullarına göre ayrıca lisans seçmelidir.
+This repository is a retrospective portfolio analysis based on publicly available educational data. A code license has intentionally not been added; the repository owner should select a license separately according to the intended sharing terms.
